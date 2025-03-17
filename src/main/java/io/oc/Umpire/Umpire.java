@@ -4,10 +4,12 @@ import io.oc.Umpire.core.MapCleaner;
 import io.oc.Umpire.core.UmpireMatch;
 import io.oc.Umpire.core.UmpirePlayer;
 import io.oc.Umpire.listeners.*;
+import io.oc.Umpire.retro.SaturationListener;
 import io.oc.Umpire.utils.MapUtils;
 
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
@@ -29,14 +31,16 @@ public class Umpire extends JavaPlugin{
         scoreboard.getTeams().forEach(Team::unregister);
 
         getLogger().info("Adding Listeners");
-        getServer().getPluginManager().registerEvents(new SwimmingListener(), this);
-        getServer().getPluginManager().registerEvents(new RespawnListener(), this);
-        getServer().getPluginManager().registerEvents(new LiquidListener(), this);
-        getServer().getPluginManager().registerEvents(new VoidListener(), this);
-        getServer().getPluginManager().registerEvents(new VictoryConditionListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerConnectionListener(), this);
-        getServer().getPluginManager().registerEvents(new ViewInventoryListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerResourceListener(), this);
+        PluginManager pm = getServer().getPluginManager();
+        pm.registerEvents(new SwimmingListener(), this);
+        pm.registerEvents(new RespawnListener(), this);
+        pm.registerEvents(new LiquidListener(), this);
+        pm.registerEvents(new VoidListener(), this);
+        pm.registerEvents(new VictoryConditionListener(), this);
+        pm.registerEvents(new PlayerConnectionListener(), this);
+        pm.registerEvents(new ViewInventoryListener(), this);
+        pm.registerEvents(new PlayerResourceListener(), this);
+        pm.registerEvents(new SaturationListener(), this);
 
         Commands commands = new Commands();
         CommandHandler handler = new CommandHandler();

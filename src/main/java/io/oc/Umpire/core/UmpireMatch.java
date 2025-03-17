@@ -1,10 +1,9 @@
 package io.oc.Umpire.core;
 
 import io.oc.Umpire.*;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Instrument;
-import org.bukkit.Note;
+import org.bukkit.*;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.Set;
@@ -18,15 +17,33 @@ public class UmpireMatch {
     public UmpireMap map;
     public State state;
     CountdownTimer startTimer;
+    public boolean retro;
 
-    public UmpireMatch(UmpireMap map){
+    public UmpireMatch(UmpireMap map, boolean retro){
         this.map = map;
+
+        if(retro) {
+            YamlConfiguration config = Bukkit.spigot().getConfig();
+            ConfigurationSection worldSettings = config.getConfigurationSection("world-settings");
+            ConfigurationSection newSection = worldSettings.createSection(map.worldName);
+            ConfigurationSection hungerSection = newSection.createSection("hunger");
+
+            hungerSection.set("jump-walk-exhaustion", 0.2f);
+            hungerSection.set("jump-sprint-exhaustion", 0.8f);
+            hungerSection.set("combat-exhaustion", 0.3f);
+            //hungerSection.set("regen-exhaustion", 4.0f);Regen by default has scaling exhaustion. Not sure what this even does.
+            hungerSection.set("swim-multiplier", 0.015f);
+            //hungerSection.set("sprint-multiplier", 0.1f); This is unchanged
+            hungerSection.set("other-multiplier", 0.01f);
+        }
+
         map.startWorld();
 
         map.loadMapFromXML(this);
 
         teams.add(obsTeam);
         this.state = State.PREGAME;
+        this.retro = retro;
     }
 
     public void broadcast(String message){
@@ -49,6 +66,9 @@ public class UmpireMatch {
     }
 
     public void addPlayer(UmpirePlayer player) {
+        if(retro){
+            player.bukkitPlayer.setSaturatedRegenRate(80);
+        }
         obsTeam.addPlayer(player);
         player.wipePlayer();
         player.match = this;

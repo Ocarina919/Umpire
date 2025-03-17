@@ -98,7 +98,7 @@ public class Commands extends HashMap<String, UmpireCommand> {
         p.sendMessage(ChatColor.GRAY + "Loading Map: " + ChatColor.WHITE + ChatColor.BOLD + mapDescriptor.name + ChatColor.WHITE);
         UmpireMap umpireMap = new UmpireMap(mapDescriptor);
 
-        UmpireMatch match = new UmpireMatch(umpireMap);
+        UmpireMatch match = new UmpireMatch(umpireMap, true);
 
         match.addPlayer(up);
         p.teleport(match.obsTeam.spawnPoint);
@@ -204,6 +204,7 @@ public class Commands extends HashMap<String, UmpireCommand> {
         up.team = null;
         p.teleport(getServer().getWorlds().get(0).getSpawnLocation());
 
+        up.bukkitPlayer.setSaturatedRegenRate(20);
         up.match.deload();
 
         up.match = null;
@@ -218,7 +219,7 @@ public class Commands extends HashMap<String, UmpireCommand> {
         MapDescriptor mapDescriptor = new MapDescriptor(oldMatch.map.mapDescriptor.mapName);
         UmpireMap umpireMap = new UmpireMap(mapDescriptor);
 
-        UmpireMatch match = new UmpireMatch(umpireMap);
+        UmpireMatch match = new UmpireMatch(umpireMap, oldMatch.retro);
 
         for(UmpirePlayer otherPlayer: oldMatch.getPlayers()){
             match.addPlayer(otherPlayer);
