@@ -5,6 +5,7 @@ import io.oc.Umpire.core.UmpireMatch;
 import io.oc.Umpire.core.UmpirePlayer;
 import io.oc.Umpire.listeners.*;
 import io.oc.Umpire.retro.SaturationListener;
+import io.oc.Umpire.retro.WeaponCooldownListener;
 import io.oc.Umpire.utils.MapUtils;
 
 import org.bukkit.command.PluginCommand;
@@ -41,6 +42,7 @@ public class Umpire extends JavaPlugin{
         pm.registerEvents(new ViewInventoryListener(), this);
         pm.registerEvents(new PlayerResourceListener(), this);
         pm.registerEvents(new SaturationListener(), this);
+        pm.registerEvents(new WeaponCooldownListener(), this);
 
         Commands commands = new Commands();
         CommandHandler handler = new CommandHandler();
