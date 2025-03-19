@@ -3,6 +3,7 @@ package io.oc.Umpire.core;
 import io.oc.Umpire.*;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.GameRule;
 import org.bukkit.Instrument;
 import org.bukkit.Note;
 import org.bukkit.entity.Player;
@@ -22,8 +23,8 @@ public class UmpireMatch {
     public UmpireMatch(UmpireMap map){
         this.map = map;
         map.startWorld();
-
         map.loadMapFromXML(this);
+        map.world.setGameRule(GameRule.DO_INSOMNIA, false);
 
         teams.add(obsTeam);
         this.state = State.PREGAME;

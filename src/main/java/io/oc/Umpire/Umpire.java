@@ -1,19 +1,30 @@
 package io.oc.Umpire;
 
-import io.oc.Umpire.core.MapCleaner;
-import io.oc.Umpire.core.UmpireMatch;
-import io.oc.Umpire.core.UmpirePlayer;
-import io.oc.Umpire.listeners.*;
-import io.oc.Umpire.utils.MapUtils;
+import java.util.HashSet;
+import java.util.Set;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-import java.util.HashSet;
-import java.util.Set;
+import io.oc.Umpire.core.MapCleaner;
+import io.oc.Umpire.core.UmpireMatch;
+import io.oc.Umpire.core.UmpirePlayer;
+import io.oc.Umpire.listeners.LiquidListener;
+import io.oc.Umpire.listeners.MapPracticeListener;
+import io.oc.Umpire.listeners.PlayerConnectionListener;
+import io.oc.Umpire.listeners.PlayerResourceListener;
+import io.oc.Umpire.listeners.RespawnListener;
+import io.oc.Umpire.listeners.SwimmingListener;
+import io.oc.Umpire.listeners.VictoryConditionListener;
+import io.oc.Umpire.listeners.ViewInventoryListener;
+import io.oc.Umpire.listeners.VoidListener;
+import io.oc.Umpire.utils.MapUtils;
 
 
 public class Umpire extends JavaPlugin{
@@ -37,6 +48,7 @@ public class Umpire extends JavaPlugin{
         getServer().getPluginManager().registerEvents(new PlayerConnectionListener(), this);
         getServer().getPluginManager().registerEvents(new ViewInventoryListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerResourceListener(), this);
+        getServer().getPluginManager().registerEvents(new MapPracticeListener(), this);
 
         Commands commands = new Commands();
         CommandHandler handler = new CommandHandler();

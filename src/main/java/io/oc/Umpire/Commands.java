@@ -9,6 +9,7 @@ import java.io.File;
 import java.util.*;
 
 import io.oc.Umpire.core.*;
+import io.oc.Umpire.practice.Practice;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -72,6 +73,7 @@ public class Commands extends HashMap<String, UmpireCommand> {
         this.put("joinmatch", new UmpireCommand(Set.of(1),this::joinmatch, false));
         this.put("viewinventory", new UmpireCommand(Set.of(1),this::viewinventory, false));
         this.put("maps", new UmpireCommand(Set.of(0,1,2,3,4,5,6,7,8,9,10),this::maps,false));
+        this.put("practice", new UmpireCommand(Set.of(0),this::practice,false));
     }
     private boolean viewinventory(String[] args, Player p, UmpirePlayer up) {
         Player target = Bukkit.getPlayer(args[0]);
@@ -338,4 +340,15 @@ public class Commands extends HashMap<String, UmpireCommand> {
     	
     	return false;
     }
+    
+    private boolean practice(String[] args, Player p, UmpirePlayer up) {
+        //No need to redo items when they're already there
+        if(Practice.practiceInventory == null) {
+            Practice.init();
+        }
+
+    	p.openInventory(Practice.practiceInventory);
+    	return true;
+    }
+    
 }
